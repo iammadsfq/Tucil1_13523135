@@ -1,14 +1,26 @@
+package view;
+
+import model.InputReader;
+import model.Solver;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Solver puzzle = InputReader.readPuzzleFromFile("custom_1.txt");
+        Solver puzzle = InputReader.readPuzzleFromFile("test_1.txt");
+        long startTime = System.nanoTime();
         if (puzzle.solve(0)) {
-          System.out.println("Solution found!");
+            System.out.println("Solution found!");
         } else {
-            System.out.println("No solution.");
+            System.out.println("No  ``  .");
         }
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1_000_000;
+
+        System.out.println("Execution time: " + duration + " ms");
+        System.out.println("Total cases checked: " + puzzle.getCaseChecked());
     }
 //    public static void main(String[] args) {
 //        Board board = new Board(3, 3); // Ukuran papan 5x5

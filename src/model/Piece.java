@@ -1,3 +1,5 @@
+package model;
+
 public class Piece {
     private char id;
     private boolean[][] shape;
