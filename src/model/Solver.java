@@ -16,6 +16,10 @@ public class Solver {
         return caseChecked;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     public boolean solve(int idx) { //idx bwt list pieces
         if (idx == pieces.size()) {
             return board.isBoardFull();

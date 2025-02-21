@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class InputReader {
+public class FileHandler {
     public static Solver readPuzzleFromFile(String fileName)
     {
         Solver puzzle = null;
@@ -54,8 +54,8 @@ public class InputReader {
                 boolean[] row = new boolean[chars.length];
                 char current_row_id = '-';
                 for (int i = 0; i < chars.length; i++) {
-                    if (current_row_id != chars[i]) {
-                        if (current_row_id == '-' || current_row_id == ' ') {
+                    if (current_row_id != chars[i] && chars[i] != ' ') {
+                        if (current_row_id == '-') {
                             current_row_id = chars[i];
                         }
                         else {
@@ -119,6 +119,7 @@ public class InputReader {
                 }
                 tempPiece.add(row);
             }
+            sc.close();
             int height = tempPiece.size();
             boolean[][] piece_shape = new boolean[height][width];
             for (int i1 = 0; i1 < height; i1++) {
@@ -157,5 +158,14 @@ public class InputReader {
             System.out.println(e.getMessage());
         }
         return puzzle;
+    }
+
+    public static void saveToFile(String output, String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write(output);
+            System.out.println("Output disimpan ke " + filename);
+        } catch (IOException e) {
+            System.err.println("Terjadi kesalahan saat menulis ke file: " + e.getMessage());
+        }
     }
 }

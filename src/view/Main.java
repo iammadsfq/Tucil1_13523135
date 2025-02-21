@@ -1,53 +1,25 @@
 package view;
 
-import model.InputReader;
+import model.FileHandler;
 import model.Solver;
 
-import java.util.ArrayList;
-import java.util.List;
+import static model.FileHandler.saveToFile;
 
 public class Main {
     public static void main(String[] args) {
-        Solver puzzle = InputReader.readPuzzleFromFile("test_1.txt");
+        String filename = "lana_2.txt";
+        Solver puzzle = FileHandler.readPuzzleFromFile(filename);
         long startTime = System.nanoTime();
-        if (puzzle.solve(0)) {
-            System.out.println("Solution found!");
-        } else {
-            System.out.println("No  ``  .");
-        }
-
+        boolean found = puzzle.solve(0);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1_000_000;
-
-        System.out.println("Execution time: " + duration + " ms");
-        System.out.println("Total cases checked: " + puzzle.getCaseChecked());
+        if (found) {
+            String output = "Solusi ditemukan!\n \n" + puzzle.getBoard().boardToString() + "\n \nWaktu pencarian: " + duration +
+                    " ms\n" + "Banyak kasus ditinjau: " + puzzle.getCaseChecked();
+            System.out.println(output);
+            //FileHandler.saveToFile(output,"save.txt");
+        } else {
+            System.out.println("Solusi tidak ditemukan!");
+        }
     }
-//    public static void main(String[] args) {
-//        Board board = new Board(3, 3); // Ukuran papan 5x5
-//        List<Piece> pieces = new ArrayList<>();
-//
-//        pieces.add(new Piece('A', new boolean[][] {
-//                {true, true, true},
-//                {false, true, false}
-//        }));
-//
-//        pieces.add(new Piece('B', new boolean[][] {
-//                {true, false},
-//                {false, true}
-//        }));
-//
-//        pieces.add(new Piece('C', new boolean[][] {
-//                {true},
-//                {true}
-//        }));
-//
-//        Solver solver = new Solver(board, pieces);
-//        if (solver.solve(0)) {
-//            System.out.println("Solution found!");
-//            board.printBoard();
-//        } else {
-//            System.out.println("No solution.");
-//        }
-//    }
-
 }

@@ -75,6 +75,18 @@ public class Board {
         }
     }
 
+    public String boardToString() {
+        StringBuilder sb = new StringBuilder();
+        for (char[] row : grid) {
+            for (char cell : row) {
+                sb.append(cell).append(" ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+
     public void modifyBoard(List<char[]> model) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
