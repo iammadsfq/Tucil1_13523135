@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Board {
     private int rows, cols;
     private char[][] grid; //pakai '*' untuk kosong
@@ -68,6 +70,14 @@ public class Board {
                 System.out.print(cell + " ");
             }
             System.out.println();
+        }
+    }
+
+    public void modifyBoard(List<char[]> model) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (model.get(i)[j] == '.') grid[i][j] = '-';
+            }
         }
     }
 }

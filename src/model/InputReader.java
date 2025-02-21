@@ -10,7 +10,6 @@ public class InputReader {
         Solver puzzle = null;
         try {
             File file = new File("test/" + fileName);
-            System.out.println("ppp");
             Scanner sc = new Scanner(file);
             String line = sc.nextLine();
             String[] values = line.trim().split("\\s+");
@@ -18,37 +17,52 @@ public class InputReader {
                 System.out.println("Format file tidak valid!\n");
                 return null;
             }
+            int expected_row = Integer.parseInt(values[0]);
+            int expected_col = Integer.parseInt(values[1]);
+            Board board = new Board(expected_row, expected_col);
             line = sc.nextLine();
             if (Objects.equals(line, "CUSTOM")) {
-                return null;
+                List<char[]> tempMatrix = new ArrayList<>();
+                for (int i0 = 0; i0 < expected_row; i0++) {
+                    line = sc.nextLine();
+                    char[] board_row = line.toCharArray();
+                    if (board_row.length != expected_col) {
+                        return null;
+                    }
+                    else {
+                        tempMatrix.add(board_row);
+                    }
+                }
+                board.modifyBoard(tempMatrix);
             }
             else if (!Objects.equals(line, "DEFAULT")){
                 return null;
             }
-            Board board = new Board(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
+
             List<Piece> pieces = new ArrayList<>();
             int expected_length = Integer.parseInt(values[2]);
-            char currentId = ' ';
+            char currentId = '-';
             List<boolean[]> tempPiece = new ArrayList<>();
             int width = -1;
+            boolean isNewPiece = true;
 
             while (sc.hasNextLine()) {
                 line = sc.nextLine();
                 char[] chars = line.toCharArray();
-                if (width < chars.length) {
-                    width = chars.length;
-                }
                 boolean[] row = new boolean[chars.length];
-                char current_row_id = ' ';
+                char current_row_id = '-';
                 for (int i = 0; i < chars.length; i++) {
                     if (current_row_id != chars[i]) {
-                        if (current_row_id == ' ') {
+                        if (current_row_id == '-' || current_row_id == ' ') {
                             current_row_id = chars[i];
                         }
                         else {
                             System.out.println("beda\n");
                             return null;
                         }
+                    }
+                    if (currentId == '-') {
+                        currentId = chars[i];
                     }
                     if (chars[i] == currentId) {
                         row[i] = true;
@@ -76,7 +90,7 @@ public class InputReader {
                                 }
                             }
                         }
-                        if (currentId != ' ') {
+                        if (currentId != '-') {
                             Piece piece = new Piece(currentId, piece_shape);
                             System.out.println("ID: " + currentId);
                             System.out.println("Height: " + height);
@@ -85,9 +99,20 @@ public class InputReader {
                             piece.printPiece();
                             pieces.add(piece);
                         }
+                        width = -1;
                         currentId = chars[i];
                         row[i] = true;
                         tempPiece.clear();
+                        isNewPiece = true;
+                    }
+                }
+                if (isNewPiece) {
+                    isNewPiece = false;
+                    width = chars.length;
+                }
+                else {
+                    if (width < chars.length) {
+                        width = chars.length;
                     }
                 }
                 tempPiece.add(row);
@@ -129,7 +154,6 @@ public class InputReader {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("masuk\n");
         return puzzle;
     }
 }

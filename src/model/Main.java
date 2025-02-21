@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Solver puzzle = InputReader.readPuzzleFromFile("test_1.txt");
+        Solver puzzle = InputReader.readPuzzleFromFile("custom_1.txt");
         if (puzzle.solve(0)) {
           System.out.println("Solution found!");
         } else {
