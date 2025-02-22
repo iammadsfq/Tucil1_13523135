@@ -20,6 +20,7 @@ import model.FileHandler;
 import model.Solver;
 import java.io.File;
 
+import static model.FileHandler.saveSceneAsImage;
 import static model.FileHandler.saveToFile;
 
 public class Main extends Application {
@@ -173,12 +174,14 @@ public class Main extends Application {
         boardView.updateBoard(puzzle.getBoard());
 
         Button saveButton = createStyledButton("Simpan Teks");
+        Button saveImageButton = createStyledButton("Simpan Gambar");
         Button backButton = createStyledButton("Kembali");
 
         saveButton.setOnAction(e -> saveSolution());
+        saveImageButton.setOnAction(e -> FileHandler.saveSceneAsImage(primaryStage.getScene(), primaryStage));
         backButton.setOnAction(e -> showHomePage());
 
-        HBox buttonBox = new HBox(15, saveButton, backButton);
+        HBox buttonBox = new HBox(15, saveButton, backButton, saveImageButton);
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox centerBox = new VBox(20, resultText, boardView.createBoardView(), buttonBox);
