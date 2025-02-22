@@ -1,10 +1,12 @@
 package model;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Solver {
     private Board board;
     private List<Piece> pieces;
+    private long searchDuration;
     private int caseChecked = 0;
 
     public Solver(Board board, List<Piece> pieces) {
@@ -20,7 +22,7 @@ public class Solver {
         return board;
     }
 
-    public boolean solve(int idx) { //idx bwt list pieces
+    public boolean solve(int idx, Consumer<Board> stateCallback) { //idx bwt list pieces
         if (idx == pieces.size()) {
             return board.isBoardFull();
         }
@@ -33,9 +35,12 @@ public class Solver {
                     if (board.canPlacePiece(piece, row, col)) {
                         board.placePiece(piece, row, col);
                         caseChecked++;
+                        if (stateCallback != null) {
+                            stateCallback.accept(new Board(board));
+                        }
                         // board.printBoard();
                         // System.out.println("\n");
-                        if (solve(idx+1)) {
+                        if (solve(idx+1, stateCallback)) {
                             return true;
                         }
                         board.removePiece(piece, row, col);
@@ -44,7 +49,7 @@ public class Solver {
                         board.placePiece(flipped_piece, row, col);
                         // board.printBoard();
                         // System.out.println("\n");
-                        if (solve(idx+1)) {
+                        if (solve(idx+1, stateCallback)) {
                             return true;
                         }
                         board.removePiece(flipped_piece, row, col);
@@ -56,4 +61,13 @@ public class Solver {
         }
         return false;
     }
+
+    public void setSearchDuration(long duration) {
+        this.searchDuration = duration;
+    }
+
+    public long getSearchDuration() {
+        return searchDuration;
+    }
+
 }

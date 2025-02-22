@@ -17,12 +17,27 @@ public class Board {
         }
     }
 
+    public Board(Board other) {
+        this.rows = other.rows;
+        this.cols = other.cols;
+        this.grid = new char[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(other.grid[i], 0, this.grid[i], 0, cols);
+        }
+    }
+
+
     public int getRows() {
         return rows;
     }
     public int getCols() {
         return cols;
     }
+    public char getCell(int i,int j) {
+        return grid[i][j];
+    }
+
     public boolean canPlacePiece(Piece piece, int row, int col) {
         boolean[][] shape = piece.getShape();
         for (int i = 0; i < shape.length; i++) {

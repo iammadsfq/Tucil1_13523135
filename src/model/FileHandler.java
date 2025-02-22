@@ -1,5 +1,12 @@
 package model;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Scene;
+import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import javax.imageio.ImageIO;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +18,7 @@ public class FileHandler {
     {
         Solver puzzle = null;
         try {
-            File file = new File("test/" + fileName);
+            File file = new File(fileName);
             Scanner sc = new Scanner(file);
             String line = sc.nextLine();
             String[] values = line.trim().split("\\s+");
@@ -160,12 +167,37 @@ public class FileHandler {
         return puzzle;
     }
 
-    public static void saveToFile(String output, String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write(output);
-            System.out.println("Output disimpan ke " + filename);
-        } catch (IOException e) {
-            System.err.println("Terjadi kesalahan saat menulis ke file: " + e.getMessage());
+    public static void saveToFile(String output, Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Simpan Teks");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(output);
+                System.out.println("Output berhasil disimpan ke: " + file.getAbsolutePath());
+            } catch (IOException e) {
+                System.err.println("Terjadi kesalahan saat menyimpan file: " + e.getMessage());
+            }
+        }
+    }
+
+
+    public static void saveSceneAsImage(Scene scene, Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Simpan Gambar");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG Image", "*.png"));
+
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            try {
+                WritableImage image = new WritableImage((int) scene.getWidth(), (int) scene.getHeight());
+                scene.snapshot(image);
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+                System.out.println("Gambar berhasil disimpan: " + file.getAbsolutePath());
+            } catch (IOException e) {
+                System.err.println("Gagal menyimpan gambar: " + e.getMessage());
+            }
         }
     }
 }
