@@ -49,6 +49,7 @@ public class FileHandler {
             }
 
             List<Piece> pieces = new ArrayList<>();
+            List<Character> pieces_id = new ArrayList<>();
             int expected_length = Integer.parseInt(values[2]);
             char currentId = '-';
             List<boolean[]> tempPiece = new ArrayList<>();
@@ -66,7 +67,7 @@ public class FileHandler {
                             current_row_id = chars[i];
                         }
                         else {
-                            System.out.println("beda\n");
+                            System.out.println("Format file tidak valid!\n");
                             return null;
                         }
                     }
@@ -81,10 +82,9 @@ public class FileHandler {
                     }
                     else {
                         if (chars[i] < 'A' || chars[i] > 'Z') {
-                            System.out.println("diluar\n");
+                            System.out.println("Format file tidak valid!\n");
                             return null;
                         }
-                        // Masukin piece yg lama, ganti currentId, refresh tempPiece
                         int height = tempPiece.size();
                         boolean[][] piece_shape = new boolean[height][width];
                         for (int i1 = 0; i1 < height; i1++) {
@@ -100,13 +100,18 @@ public class FileHandler {
                             }
                         }
                         if (currentId != '-') {
+                            if (pieces_id.contains(currentId)) {
+                                System.out.println("ID piece baru sudah pernah digunakan!");
+                                return null;
+                            }
                             Piece piece = new Piece(currentId, piece_shape);
-                            System.out.println("ID: " + currentId);
-                            System.out.println("Height: " + height);
-                            System.out.println("Width: " + width);
-                            System.out.println("Shape: ");
-                            piece.printPiece();
+//                            System.out.println("ID: " + currentId);
+//                            System.out.println("Height: " + height);
+//                            System.out.println("Width: " + width);
+//                            System.out.println("Shape: ");
+//                            piece.printPiece();
                             pieces.add(piece);
+                            pieces_id.add(currentId);
                         }
                         width = -1;
                         currentId = chars[i];
@@ -142,18 +147,22 @@ public class FileHandler {
                 }
             }
             if (currentId != ' ') {
+                if (pieces_id.contains(currentId)) {
+                    System.out.println("ID piece baru sudah pernah digunakan!");
+                    return null;
+                }
                 Piece piece = new Piece(currentId, piece_shape);
-                System.out.println("ID: " + currentId);
-                System.out.println("Height: " + height);
-                System.out.println("Width: " + width);
-                System.out.println("Shape: ");
-                piece.printPiece();
+//                System.out.println("ID: " + currentId);
+//                System.out.println("Height: " + height);
+//                System.out.println("Width: " + width);
+//                System.out.println("Shape: ");
+//                piece.printPiece();
                 pieces.add(piece);
+                pieces_id.add(currentId);
             }
             if (expected_length != pieces.size()) {
-                System.out.println(expected_length);
-                System.out.println("g sesuai\n");
-                System.out.println(pieces.size());
+                System.out.println("Jumlah piece tidak sesuai!\nJumlah piece yang diminta: " + expected_length +
+                        "\nJumlah piece yang diterima: " + pieces.size());
                 return null;
             }
             else {

@@ -38,8 +38,8 @@ public class Solver {
                         if (stateCallback != null) {
                             stateCallback.accept(new Board(board));
                         }
-                        // board.printBoard();
-                        // System.out.println("\n");
+//                         board.printBoard();
+//                         System.out.println("\n");
                         if (solve(idx+1, stateCallback)) {
                             return true;
                         }
@@ -47,8 +47,8 @@ public class Solver {
                     }
                     else if (board.canPlacePiece(flipped_piece, row, col)) {
                         board.placePiece(flipped_piece, row, col);
-                        // board.printBoard();
-                        // System.out.println("\n");
+//                         board.printBoard();
+//                         System.out.println("\n");
                         if (solve(idx+1, stateCallback)) {
                             return true;
                         }

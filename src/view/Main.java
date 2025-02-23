@@ -20,7 +20,6 @@ import model.FileHandler;
 import model.Solver;
 import java.io.File;
 
-import static model.FileHandler.saveSceneAsImage;
 import static model.FileHandler.saveToFile;
 
 public class Main extends Application {
@@ -110,6 +109,10 @@ public class Main extends Application {
         }
 
         puzzle = FileHandler.readPuzzleFromFile(selectedFile);
+        if (puzzle == null) {
+            fileLabel.setText("Format file tidak sesuai!");
+            return;
+        }
         showProcessPage();
 
         Task<Boolean> solveTask = new Task<>() {
@@ -120,7 +123,8 @@ public class Main extends Application {
                 long endTime = System.nanoTime();
                 long duration = (endTime - startTime) / 1_000_000;
                 puzzle.setSearchDuration(duration);
-                updateMessage("Solusi ditemukan!\nWaktu pencarian: " + duration + " ms\nKasus ditinjau: " + puzzle.getCaseChecked());
+                if (found) updateMessage("Solusi ditemukan!\nWaktu pencarian: " + duration + " ms\nKasus ditinjau: " + puzzle.getCaseChecked());
+                else updateMessage("Solusi tidak ditemukan!\nWaktu pencarian: " + duration + " ms\nKasus ditinjau: " + puzzle.getCaseChecked());
                 return found;
             }
 
@@ -137,11 +141,7 @@ public class Main extends Application {
 
         solveTask.setOnSucceeded(e -> {
             boolean found = solveTask.getValue();
-            if (found) {
-                showSolutionPage(solveTask.getMessage());
-            } else {
-                fileLabel.setText("Solusi tidak ditemukan!");
-            }
+            showSolutionPage(solveTask.getMessage(), found);
         });
         new Thread(solveTask).start();
     }
@@ -163,41 +163,54 @@ public class Main extends Application {
         primaryStage.setScene(scene);
     }
 
-    private void showSolutionPage(String message) {
+    private void showSolutionPage(String message, boolean found) {
         BorderPane layout = new BorderPane();
         layout.setStyle("-fx-background-color: linear-gradient(to bottom, #1A1A40, #3D3D8B);");
 
         Text resultText = new Text(message);
         resultText.setFont(customFont);
         resultText.setFill(Color.LIGHTYELLOW);
-
+        System.out.print(message);
         boardView.updateBoard(puzzle.getBoard());
 
         Button saveButton = createStyledButton("Simpan Teks");
         Button saveImageButton = createStyledButton("Simpan Gambar");
         Button backButton = createStyledButton("Kembali");
 
-        saveButton.setOnAction(e -> saveSolution());
+        saveButton.setOnAction(e -> saveSolution(found));
         saveImageButton.setOnAction(e -> FileHandler.saveSceneAsImage(primaryStage.getScene(), primaryStage));
         backButton.setOnAction(e -> showHomePage());
 
         HBox buttonBox = new HBox(15, saveButton, backButton, saveImageButton);
         buttonBox.setAlignment(Pos.CENTER);
 
-        VBox centerBox = new VBox(20, resultText, boardView.createBoardView(), buttonBox);
+        VBox centerBox;
+        if (found) {
+            centerBox = new VBox(20, resultText, boardView.createBoardView(), buttonBox);
+
+        }
+        else {
+            centerBox = new VBox(20, resultText, buttonBox);
+
+        }
         centerBox.setAlignment(Pos.CENTER);
         centerBox.setPadding(new javafx.geometry.Insets(20));
-
         layout.setCenter(centerBox);
 
         Scene scene = new Scene(layout, 600, 600);
         primaryStage.setScene(scene);
     }
 
-    private void saveSolution() {
-        saveToFile("Solusi ditemukan!\n\n" + puzzle.getBoard().boardToString() +
-                        "\n\nWaktu pencarian: " + puzzle.getSearchDuration() + " ms\nKasus ditinjau: " + puzzle.getCaseChecked(),
-                primaryStage);
+    private void saveSolution(boolean found) {
+        if (found) {
+            saveToFile("Solusi ditemukan!\n\n" + puzzle.getBoard().boardToString() +
+                            "\n\nWaktu pencarian: " + puzzle.getSearchDuration() + " ms\nKasus ditinjau: " + puzzle.getCaseChecked(),
+                    primaryStage);
+        }
+        else {
+            saveToFile("Solusi tidak ditemukan!\n\n" + "Waktu pencarian: " + puzzle.getSearchDuration() + " ms\nKasus ditinjau: " + puzzle.getCaseChecked(),
+                    primaryStage);
+        }
     }
 
     private Font loadFont(String fontFileName, double size) {
