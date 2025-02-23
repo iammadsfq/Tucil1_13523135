@@ -19,7 +19,8 @@
 2. **Pergi ke direktori program di terminal**
 ```bash
 cd ./tulisPathDisini
-4. ***Jalankan program***
+```
+3. ***Jalankan program***
 Pastikan kamu sudah mengganti "path/to/javafx-sdk-23/lib" menjadi path JavaFX
 ```bash
 java --module-path "path/to/javafx-sdk-23/lib" --add-modules javafx.controls,javafx.fxml -jar bin/IQPuzzleProSolver.jar
