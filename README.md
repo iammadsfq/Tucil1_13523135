@@ -18,7 +18,7 @@
 1. **Clone repository ini**
 2. **Pergi ke direktori program di terminal**
 3. ```bash
-cd ./tulisPathDisini```
+   cd ./tulisPathDisini
 4. ***Jalankan program***
 Pastikan kamu sudah mengganti "path/to/javafx-sdk-23/lib" menjadi path JavaFX
 ```bash
