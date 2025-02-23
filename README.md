@@ -20,3 +20,4 @@ Untuk menjalankan program, gunakan perintah berikut di terminal:
 #### Di Windows:
 ```bash
 java --module-path "path/to/javafx-sdk-23/lib" --add-modules javafx.controls,javafx.fxml -jar bin/IQPuzzleProSolver.jar
+Pastikan kamu sudah mengganti "path/to/javafx-sdk-23/lib" menjadi path JavaFX
