@@ -36,7 +36,7 @@ public class Solver {
                         board.placePiece(piece, row, col);
                         caseChecked++;
                         if (stateCallback != null) {
-                            stateCallback.accept(new Board(board));
+                            stateCallback.accept(board);
                         }
 //                         board.printBoard();
 //                         System.out.println("\n");

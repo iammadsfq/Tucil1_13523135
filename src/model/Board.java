@@ -71,6 +71,7 @@ public class Board {
         }
     }
 
+    
     public boolean isBoardFull() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {

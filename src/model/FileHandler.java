@@ -20,14 +20,28 @@ public class FileHandler {
         try {
             File file = new File(fileName);
             Scanner sc = new Scanner(file);
+            if (!sc.hasNextLine()){
+                System.out.println("File Kosong!\n");
+                return null;
+            }
             String line = sc.nextLine();
             String[] values = line.trim().split("\\s+");
             if (values.length != 3) {
                 System.out.println("Format file tidak valid!\n");
                 return null;
             }
-            int expected_row = Integer.parseInt(values[0]);
-            int expected_col = Integer.parseInt(values[1]);
+            int expected_row;
+            int expected_col;
+            int expected_length;
+            try {
+                expected_row = Integer.parseInt(values[0]);
+                expected_col = Integer.parseInt(values[1]);
+                expected_length = Integer.parseInt(values[2]);
+            } catch (NumberFormatException e) {
+                System.out.println("Format file tidak valid! Baris pertama harus berupa angka.\n");
+                return null;
+            }
+
             Board board = new Board(expected_row, expected_col);
             line = sc.nextLine();
             if (Objects.equals(line, "CUSTOM")) {
@@ -38,20 +52,17 @@ public class FileHandler {
                     if (board_row.length != expected_col) {
                         System.out.println("Custom Map tidak valid!");
                         return null;
-                    }
-                    else {
+                    } else {
                         tempMatrix.add(board_row);
                     }
                 }
                 board.modifyBoard(tempMatrix);
-            }
-            else if (!Objects.equals(line, "DEFAULT")){
+            } else if (!Objects.equals(line, "DEFAULT")) {
                 return null;
             }
 
             List<Piece> pieces = new ArrayList<>();
             List<Character> pieces_id = new ArrayList<>();
-            int expected_length = Integer.parseInt(values[2]);
             char currentId = '-';
             List<boolean[]> tempPiece = new ArrayList<>();
             int width = -1;
@@ -66,8 +77,7 @@ public class FileHandler {
                     if (current_row_id != chars[i] && chars[i] != ' ') {
                         if (current_row_id == '-') {
                             current_row_id = chars[i];
-                        }
-                        else {
+                        } else {
                             System.out.println("Format file tidak valid!\n");
                             return null;
                         }
@@ -77,11 +87,9 @@ public class FileHandler {
                     }
                     if (chars[i] == currentId) {
                         row[i] = true;
-                    }
-                    else if (chars[i] == ' ') {
+                    } else if (chars[i] == ' ') {
                         row[i] = false;
-                    }
-                    else {
+                    } else {
                         if (chars[i] < 'A' || chars[i] > 'Z') {
                             System.out.println("Format file tidak valid!\n");
                             return null;
@@ -94,8 +102,7 @@ public class FileHandler {
                             for (int j1 = 0; j1 < width; j1++) {
                                 if (j1 < piece_row_length) {
                                     piece_shape[i1][j1] = piece_row[j1];
-                                }
-                                else {
+                                } else {
                                     piece_shape[i1][j1] = false;
                                 }
                             }
@@ -128,8 +135,7 @@ public class FileHandler {
                 if (isNewPiece) {
                     isNewPiece = false;
                     width = chars.length;
-                }
-                else {
+                } else {
                     if (width < chars.length) {
                         width = chars.length;
                     }
@@ -145,8 +151,7 @@ public class FileHandler {
                 for (int j1 = 0; j1 < width; j1++) {
                     if (j1 < piece_row_length) {
                         piece_shape[i1][j1] = piece_row[j1];
-                    }
-                    else {
+                    } else {
                         piece_shape[i1][j1] = false;
                     }
                 }
@@ -173,8 +178,7 @@ public class FileHandler {
                 System.out.println("Jumlah piece tidak sesuai!\nJumlah piece yang diminta: " + expected_length +
                         "\nJumlah piece yang diterima: " + pieces.size());
                 return null;
-            }
-            else {
+            } else {
                 puzzle = new Solver(board, pieces);
             }
         } catch (FileNotFoundException e) {
