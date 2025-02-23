@@ -1,0 +1,17 @@
+5 5 7
+CUSTOM
+A
+AA
+B
+BB
+C
+CC
+D
+DD
+EE
+EE
+E
+FF
+FF
+F
+GGG

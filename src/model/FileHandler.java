@@ -36,6 +36,7 @@ public class FileHandler {
                     line = sc.nextLine();
                     char[] board_row = line.toCharArray();
                     if (board_row.length != expected_col) {
+                        System.out.println("Custom Map tidak valid!");
                         return null;
                     }
                     else {
