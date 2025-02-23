@@ -72,7 +72,7 @@ public class FileHandler {
                         }
                     }
                     if (currentId == '-') {
-                        currentId = chars[i];
+                        if (chars[i] != ' ') currentId = chars[i];
                     }
                     if (chars[i] == currentId) {
                         row[i] = true;
@@ -110,6 +110,10 @@ public class FileHandler {
 //                            System.out.println("Width: " + width);
 //                            System.out.println("Shape: ");
 //                            piece.printPiece();
+                            if (!piece.isValidPiece()) {
+                                System.out.println("Piece " + currentId + " tidak terhubung!\n");
+                                return null;
+                            }
                             pieces.add(piece);
                             pieces_id.add(currentId);
                         }
@@ -157,6 +161,10 @@ public class FileHandler {
 //                System.out.println("Width: " + width);
 //                System.out.println("Shape: ");
 //                piece.printPiece();
+                if (!piece.isValidPiece()) {
+                    System.out.println("Piece " + currentId + " tidak terhubung!\n");
+                    return null;
+                }
                 pieces.add(piece);
                 pieces_id.add(currentId);
             }

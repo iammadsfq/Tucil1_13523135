@@ -1,10 +1,10 @@
 5 5 7
 DEFAULT
-A
+ A
 AA
 B
 BB
-C
+ C
 CC
 D
 DD
