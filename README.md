@@ -1,3 +1,10 @@
+# Tugas Kecil 1 IF2211 2024/2025
+
+### Tentang Projek
+
+IQ Puzzle Pro Solver adalah aplikasi Java yang dirancang untuk menyelesaikan permainan IQ Puzzle Pro menggunakan metode brute force. Projek ini disusun untuk memenuhi tugas  mata kuliah IF2211 Strategi Algoritma pada Semester 2 Tahun Akademik 2024/2025
+
+---
 ### Persyaratan
 - **JDK 23**: Pastikan kamu sudah menginstal JDK 23. Kamu bisa mengunduhnya di [situs resmi OpenJDK](https://jdk.java.net/23/).
 - **JavaFX**: Program ini menggunakan JavaFX untuk tampilan antarmuka grafis. Pastikan JavaFX sudah terpasang dan dikonfigurasi dengan benar.
