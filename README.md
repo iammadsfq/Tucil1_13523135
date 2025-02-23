@@ -15,9 +15,11 @@
     - Jika JavaFX tidak terdeteksi secara otomatis, pastikan untuk mengonfigurasi *classpath* agar JavaFX bisa digunakan oleh aplikasi. Kamu bisa melakukannya dengan menambahkan *library* JavaFX ke dalam *module path* atau *classpath* sesuai dengan pengaturan di IDE atau terminal.
 
 ### Menjalankan Program
-Untuk menjalankan program, gunakan perintah berikut di terminal:
-
-#### Windows
+1. **Clone repository ini**
+2. **Pergi ke direktori program di terminal**
+3. ```bash
+cd ./tulisPathDisini```
+4. ***Jalankan program***
 Pastikan kamu sudah mengganti "path/to/javafx-sdk-23/lib" menjadi path JavaFX
 ```bash
 java --module-path "path/to/javafx-sdk-23/lib" --add-modules javafx.controls,javafx.fxml -jar bin/IQPuzzleProSolver.jar
