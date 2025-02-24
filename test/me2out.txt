@@ -1,0 +1,12 @@
+Solusi ditemukan!
+
+F F E B A A 
+F E E B A A 
+F E T O Q A 
+T T T T Q P 
+S S Q Q Q Q 
+S S Q N Q Q 
+
+
+Waktu pencarian: 703 ms
+Kasus ditinjau: 4804
