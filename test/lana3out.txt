@@ -1,0 +1,9 @@
+Solusi ditemukan!
+
+A B B B B B B G G G 
+A B B C D D F G H G 
+A A E E E D F G G G 
+
+
+Waktu pencarian: 26191 ms
+Kasus ditinjau: 380714

@@ -1,0 +1,11 @@
+Solusi ditemukan!
+
+A B B C C 
+A A B C D 
+G E E D D 
+G E E F F 
+G E F F F 
+
+
+Waktu pencarian: 13 ms
+Kasus ditinjau: 311

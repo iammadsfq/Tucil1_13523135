@@ -1,0 +1,14 @@
+4 4 6
+DEFAULT
+M
+M
+EE
+ B
+BB
+FFF
+  F
+T
+T
+T
+T
+P
